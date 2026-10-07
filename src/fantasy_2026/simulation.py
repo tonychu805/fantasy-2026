@@ -6,7 +6,7 @@ import argparse
 import csv
 import random
 import statistics
-from collections import defaultdict
+from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -140,12 +140,17 @@ def willingness(player: Player, manager: Manager, rng: random.Random) -> float:
 
 def simulate_once(players: list[Player], rng: random.Random, teams: int = DEFAULT_TEAMS) -> dict[str, int]:
     managers = [Manager(STYLES[index % len(STYLES)]) for index in range(teams)]
-    pool = list(players)
-    rng.shuffle(pool)
+    # Managers normally nominate in-demand names early. A noisy market-value
+    # order keeps that reality while allowing different auction paths each run.
+    pool = deque(sorted(
+        players,
+        key=lambda player: player.market_value + rng.gauss(0, max(3.0, player.market_value * 0.12)),
+        reverse=True,
+    ))
     prices: dict[str, int] = {}
 
     while pool and any(manager.open_spots for manager in managers):
-        player = pool.pop()
+        player = pool.popleft()
         bidders = []
         for index, manager in enumerate(managers):
             if manager.open_spots <= 0 or manager.maximum_bid < MIN_BID or not manager.can_add(player):

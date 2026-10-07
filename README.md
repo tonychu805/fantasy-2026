@@ -29,6 +29,7 @@ positions,yahoo_avg_auction_value
 
 Suggested public sources:
 
+- BoxScore Lab provides free, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) player-season total CSVs for recent NBA seasons. Use the included importer for the initial dataset.
 - NBA Stats' league dashboard includes the complete base-stat columns used here. The [`nba_api` endpoint documentation](https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/endpoints/leaguedashplayerstats.md) lists its fields.
 - The NBA's public static [league schedule JSON](https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json) supplies team game counts for weekly streaming analysis.
 - Yahoo's Fantasy Sports API is the canonical source for Yahoo eligibility and league draft results, but requires OAuth. Its [player and draft-result resources](https://sports.yahoo.com/developer/docs/) are appropriate for a personal integration.
@@ -54,6 +55,14 @@ python3 -m src.fantasy_2026.projections \
 Then feed that projection file into the valuation command below. For a player
 who changes teams or roles, edit `projected_gp`, `projected_mpg`, or individual
 projected totals before valuation and record the reasoning in a separate note.
+
+To normalize the downloaded BoxScore Lab files directly:
+
+```bash
+python3 -m src.fantasy_2026.boxscorelab \
+  --input data/raw/boxscorelab-2023-24.csv data/raw/boxscorelab-2024-25.csv data/raw/boxscorelab-2025-26.csv \
+  --output data/raw/historical_seasons.csv
+```
 
 ## Run the auction model
 
