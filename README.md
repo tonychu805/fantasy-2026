@@ -36,6 +36,25 @@ Suggested public sources:
 
 Keep raw downloads in `data/raw/`; they are ignored by Git. Do not commit Yahoo exports containing league-member information.
 
+## Project historical performance first
+
+Put one row per player-season of public NBA **season totals** in
+`data/raw/historical_seasons.csv`. Start with
+[`historical_seasons_template.csv`](data/examples/historical_seasons_template.csv).
+The pipeline uses the latest three seasons with 60% / 28% / 12% weighting. It
+models availability, minutes, and per-minute production separately.
+
+```bash
+python3 -m src.fantasy_2026.projections \
+  --input data/raw/historical_seasons.csv \
+  --output data/processed/player_projections.csv \
+  --target-season 2026-27
+```
+
+Then feed that projection file into the valuation command below. For a player
+who changes teams or roles, edit `projected_gp`, `projected_mpg`, or individual
+projected totals before valuation and record the reasoning in a separate note.
+
 ## Run the auction model
 
 No packages are required.
