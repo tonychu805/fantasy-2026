@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.venv/
+data/raw/*.csv
+data/raw/*.json
+data/processed/*.csv
+data/private/*.json
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/private/.gitkeep

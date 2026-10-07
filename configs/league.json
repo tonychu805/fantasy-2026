@@ -1,0 +1,10 @@
+{
+  "teams": 12,
+  "roster_spots_per_team": 13,
+  "auction_budget_per_team": 200,
+  "minimum_bid": 1,
+  "categories": ["fg_pct", "ft_pct", "fg3m", "pts", "reb", "ast", "stl", "blk", "tov"],
+  "starters": {"PG": 1, "SG": 1, "G": 1, "SF": 1, "PF": 1, "F": 1, "C": 2, "UTIL": 2},
+  "bench": 3
+}
+
